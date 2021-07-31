@@ -1,0 +1,16 @@
+<nav *ngIf="numberOfPages>1" class="pl-md-5 custom__pagination">
+    <button (click)="switchPages(1)" [attr.disabled]="currentPage===1?'':null"
+        class="custom__page-item btn btn-dark">&laquo;</button>
+    <button (click)="switchPages(currentPage-1)" [attr.disabled]="currentPage===1?'':null"
+        class="custom__page-item btn btn-dark">&lt;</button>
+    <button *ngFor="let i of pageArray" (click)="switchPages(i)" class="custom__page-item btn"
+        [ngClass]="i===currentPage?'btn-outline-dark':'btn-dark'">
+        {{i}}
+    </button>
+    <button (click)="switchPages(currentPage+1)"
+        [attr.disabled]="currentPage===pageArray.length?'':null"
+        class="custom__page-item btn btn-dark">&gt;</button>
+    <button (click)="switchPages(pageArray.length)"
+        [attr.disabled]="currentPage===pageArray.length?'':null"
+        class="custom__page-item btn btn-dark">&raquo;</button>
+</nav>

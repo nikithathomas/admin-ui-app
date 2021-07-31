@@ -1,0 +1,19 @@
+.admin-body {
+  &__data {
+    & th,
+    & td {
+      border-color: #343a40;
+    }
+  }
+
+  &__footer {
+    flex-direction: column;
+  }
+}
+@media (min-width: 768px) {
+  .admin-body {
+    &__footer {
+      flex-direction: row;
+    }
+  }
+}

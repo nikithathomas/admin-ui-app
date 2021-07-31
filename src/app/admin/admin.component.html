@@ -1,0 +1,72 @@
+<main class="container-fluid admin-body pt-5">
+    <input type="search" (keyup)="searchUserData($event)" #search
+        placeholder="Search by name, email or role" class="form-control" [(ngModel)]="searchKeyword"/>
+
+    <div class="table-responsive">
+        <table class="table table-bordered border border-dark mt-5 admin-body__data">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>
+                        <input type="checkbox" name="" id="" (click)="selectAllRows()" [(ngModel)]="allSelected">
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Role
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userData" [ngClass]="user.selected?'table-active':''" class="text-center">
+                    <ng-container *ngIf="currentPage===user.page">
+                        <td class="align-middle"><input type="checkbox" (click)="selectUser(user)"
+                                [(ngModel)]="user.selected"></td>
+                        <td class="align-middle">
+                            <span *ngIf="!user.edit">
+                                {{user.name}}
+                            </span>
+                            <input type="text" name="" id="" *ngIf="user.edit" [(ngModel)]="user.name" class="form-control">
+                        </td>
+                        <td class="align-middle">
+                            <span *ngIf="!user.edit">
+                                {{user.email}}
+                            </span>
+                            <input type="text" name="" id="" *ngIf="user.edit" [(ngModel)]="user.email" class="form-control">
+                        </td>
+                        <td class="align-middle">
+                            <span *ngIf="!user.edit">
+                                {{user.role | titlecase}}
+                            </span>
+                            <select name="" id="" *ngIf="user.edit" [(ngModel)]="user.role" class="form-control">
+                                <option value="member">Member</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </td>
+                        <td class="align-middle admin-body__btns">
+                            <button (click)="editUser(user)" class="btn btn-warning admin-body__edit" *ngIf="!user.edit">Edit</button>
+                            <button (click)="deleteSingleRow(user)" *ngIf="!user.edit"
+                                class="btn btn-warning mt-4 mt-md-0 ml-md-4 admin-body__delete">Delete</button>
+                            <button (click)="saveUser(user)" *ngIf="user.edit" class="btn btn-warning">Save</button>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr *ngIf="!userData.length">
+                    <td colspan="5">No results available</td>                    
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between admin-body__footer">
+        <button (click)="deleteMultipleRows()" class="btn btn-warning" [attr.disabled]="numberOfPages>0?null:''">Delete Selected</button>
+        <app-pagination [currentPage]="currentPage" [pageArray]="pageArray" [numberOfPages]="numberOfPages" (changePage)="changingCurrentPage($event)"></app-pagination>
+    </div>
+</main>

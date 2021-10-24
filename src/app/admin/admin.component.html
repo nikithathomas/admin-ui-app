@@ -1,32 +1,30 @@
 <main class="container-fluid admin-body pt-5">
     <input type="search" (keyup)="searchUserData($event)" #search
         placeholder="Search by name, email or role" class="form-control" [(ngModel)]="searchKeyword"/>
-
-    <div class="table-responsive">
         <table class="table table-bordered border border-dark mt-5 admin-body__data">
             <thead class="table-dark">
-                <tr class="text-center">
-                    <th>
+                <tr class="text-center admin-body__row">
+                    <th class="admin-body__head-col">
                         <input type="checkbox" name="" id="" (click)="selectAllRows()" [(ngModel)]="allSelected">
                     </th>
-                    <th>
+                    <th class="admin-body__head-col">
                         Name
                     </th>
-                    <th>
+                    <th class="admin-body__head-col">
                         Email
                     </th>
-                    <th>
+                    <th class="admin-body__head-col">
                         Role
                     </th>
-                    <th>
+                    <th class="admin-body__head-col">
                         Actions
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of userData" [ngClass]="user.selected?'table-active':''" class="text-center">
+                <tr *ngFor="let user of userData" [ngClass]="user.selected?'table-active':''" class="text-center admin-body__row admin-body__row--flex-col">
                     <ng-container *ngIf="currentPage===user.page">
-                        <td class="align-middle"><input type="checkbox" (click)="selectUser(user)"
+                        <td class="align-middle admin-body__col"><input type="checkbox" (click)="selectUser(user)"
                                 [(ngModel)]="user.selected"></td>
                         <td class="align-middle">
                             <span *ngIf="!user.edit">
@@ -34,13 +32,13 @@
                             </span>
                             <input type="text" name="" id="" *ngIf="user.edit" [(ngModel)]="user.name" class="form-control">
                         </td>
-                        <td class="align-middle">
+                        <td class="align-middle admin-body__col">
                             <span *ngIf="!user.edit">
                                 {{user.email}}
                             </span>
                             <input type="text" name="" id="" *ngIf="user.edit" [(ngModel)]="user.email" class="form-control">
                         </td>
-                        <td class="align-middle">
+                        <td class="align-middle admin-body__col">
                             <span *ngIf="!user.edit">
                                 {{user.role | titlecase}}
                             </span>
@@ -49,11 +47,13 @@
                                 <option value="admin">Admin</option>
                             </select>
                         </td>
-                        <td class="align-middle admin-body__btns">
+                        <td class="align-middle admin-body__col">
+                            <div class="admin-body__btns">
                             <button (click)="editUser(user)" class="btn btn-warning admin-body__edit" *ngIf="!user.edit">Edit</button>
                             <button (click)="deleteSingleRow(user)" *ngIf="!user.edit"
-                                class="btn btn-warning mt-4 mt-md-0 ml-md-4 admin-body__delete">Delete</button>
+                                class="btn btn-warning ml-4 admin-body__delete">Delete</button>
                             <button (click)="saveUser(user)" *ngIf="user.edit" class="btn btn-warning">Save</button>
+                            </div>
                         </td>
                     </ng-container>
                 </tr>
@@ -63,8 +63,6 @@
             </tbody>
 
         </table>
-    </div>
-
     <div class="d-flex justify-content-between admin-body__footer">
         <button (click)="deleteMultipleRows()" class="btn btn-warning" [attr.disabled]="numberOfPages>0?null:''">Delete Selected</button>
         <app-pagination [currentPage]="currentPage" [pageArray]="pageArray" [numberOfPages]="numberOfPages" (changePage)="changingCurrentPage($event)"></app-pagination>

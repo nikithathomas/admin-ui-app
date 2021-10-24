@@ -4,16 +4,36 @@
     & td {
       border-color: #343a40;
     }
+    & th{
+      padding:0.75rem 0.3rem;
+    }
   }
 
   &__footer {
     flex-direction: column;
+  }
+  &__row{
+    display:flex;
+    &--flex-col{
+      flex-direction: column;
+    }
+  }
+  &__head-col{
+    flex:1;
+  }
+  &__btns{
+    display: flex;
+    width:100%;
+    justify-content: center;
   }
 }
 @media (min-width: 768px) {
   .admin-body {
     &__footer {
       flex-direction: row;
+    }
+    &__row{
+      display:revert;
     }
   }
 }
